@@ -14,9 +14,9 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Start OWASP ZAP Scan
+      - name: Start OWASP ZAP Full Scan
         run: |
-          docker run -u zap -t owasp/zap2docker-stable zap-full-scan.py -t http://yourtarget.com -r zap_report.html
+          docker run -u zap -t owasp/zap2docker-stable zap-full-scan.py -t http://3.80.13.217 -r zap_report.html
       
       - name: Upload Scan Report as Artifact
         uses: actions/upload-artifact@v3
