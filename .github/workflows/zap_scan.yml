@@ -1,0 +1,25 @@
+name: OWASP ZAP Security Scan
+
+on:
+  push:
+    branches:
+      - main  # Runs on every push to `main`
+  schedule:
+    - cron: '0 0 * * 1'  # Runs every Monday at midnight UTC
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Start OWASP ZAP Scan
+        run: |
+          docker run -u zap -t owasp/zap2docker-stable zap-full-scan.py -t http://yourtarget.com -r zap_report.html
+      
+      - name: Upload Scan Report as Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ZAP-Scan-Report
+          path: zap_report.html
